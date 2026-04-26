@@ -5,6 +5,7 @@ from urllib.parse import urlparse, parse_qs
 
 from langchain_groq import ChatGroq
 from langchain_community.vectorstores import FAISS
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -12,7 +13,7 @@ from langchain_core.runnables import RunnableParallel, RunnablePassthrough, Runn
 from langchain_community.document_loaders import WebBaseLoader, PyPDFLoader
 from youtube_transcript_api import YouTubeTranscriptApi
 import yt_dlp
-from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+
 
 # ── Page config ───────────────────────────────────────────────────────────────
 
@@ -44,11 +45,7 @@ st.markdown("""
 
 @st.cache_resource
 def get_embedding():
-
-    return HuggingFaceInferenceAPIEmbeddings(
-        api_key=st.secrets["HF_API_KEY"],
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
+    return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 def get_llm():
     return ChatGroq(model="openai/gpt-oss-120b", temperature=0.7)
