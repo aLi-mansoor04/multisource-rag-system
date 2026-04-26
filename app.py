@@ -13,7 +13,7 @@ from langchain_core.runnables import RunnableParallel, RunnablePassthrough, Runn
 from langchain_community.document_loaders import WebBaseLoader, PyPDFLoader
 from youtube_transcript_api import YouTubeTranscriptApi
 import yt_dlp
-
+from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 
 # ── Page config ───────────────────────────────────────────────────────────────
 
@@ -45,7 +45,7 @@ st.markdown("""
 
 @st.cache_resource
 def get_embedding():
-    from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+
     return HuggingFaceInferenceAPIEmbeddings(
         api_key=st.secrets["HF_API_KEY"],
         model_name="sentence-transformers/all-MiniLM-L6-v2"
