@@ -45,7 +45,11 @@ st.markdown("""
 
 @st.cache_resource
 def get_embedding():
-    return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
+    return HuggingFaceInferenceAPIEmbeddings(
+        api_key=st.secrets["HF_API_KEY"],
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
 
 def get_llm():
     return ChatGroq(model="openai/gpt-oss-120b", temperature=0.7)
